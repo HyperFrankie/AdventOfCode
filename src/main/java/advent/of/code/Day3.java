@@ -12,7 +12,7 @@ public class Day3 {
 		String input = getResourceFileAsString("day3.txt");
 		if(input != null && !input.equals("")) {
 			lines = input.split("\r\n");
-//			part1();
+			part1();
 			part2();
 		}
 	}
@@ -44,28 +44,24 @@ public class Day3 {
 
 	public static void part2() {
 		String[] newList = lines.clone();
-		Arrays.sort(newList);
-		System.out.println(findNum(newList, 0) * findNum(newList, 1));
+		System.out.println(findNum(newList, 1) * findNum(newList, 0));
 	}
 
 	private static int findNum(String[] list, int mode) {
 		int bit = 0;
 		while (list.length != 1 && bit < 12) {
-			int index = (int) Math.ceil((list.length - 1) / 2d), keep = Integer.parseInt(list[index].substring(bit, bit + 1));
-			if (mode == 1) keep = 1 - keep;
-			System.out.println("end index: " + (list.length - 1));
-			System.out.println("half: " + index);
-			System.out.println("keep: " + keep);
+			int index = (int) Math.ceil(list.length - 1 / 2f);
+			int keep = Integer.parseInt(list[index].substring(bit, bit + 1));
+			if (mode == 0) keep = 1 - keep;
 			int i = 0;
 			while (list[i].charAt(bit) == '0') i++;
-			i += keep;
-			System.out.println("newIndex: " + i);
-			list = Arrays.copyOfRange(list, keep * i, i + keep * (list.length - i));
+			int endIndex = i + keep * (list.length - i);
+			list = Arrays.copyOfRange(list, keep * i, endIndex);
 			bit++;
 		}
 		String resultBytes = list[0];
 		int result = 0;
-		for (int i = 0, j = resultBytes.length(); i < resultBytes.length(); i++, j--) {
+		for (int i = 0, j = resultBytes.length() - 1; i < resultBytes.length(); i++, j--) {
 			result += Integer.parseInt(resultBytes.substring(i, i + 1)) * Math.pow(2, j);
 		}
 		System.out.println(resultBytes + ": " + result);
