@@ -1,6 +1,7 @@
 package advent.of.code;
 
 import java.util.Arrays;
+import java.util.stream.Stream;
 
 import static advent.of.code.Utils.getResourceFileAsString;
 
@@ -18,16 +19,16 @@ public class Day3 {
 	}
 
 	public static void part1() {
-		int[] counts = {0,0,0,0,0,0,0,0,0,0,0,0};
+		int[] counts = new int[12];
 		for (String l : lines) {
 			char[] chars = l.toCharArray();
 			for (int i = 0; i < chars.length; i++) {
-				System.out.println(chars[i]);
 				counts[i] += Integer.parseInt(String.valueOf(chars[i])) * 2 - 1;
+//				counts += Stream.of(chars).mapToInt(c -> Integer.parseInt(String.valueOf(c)));
 			}
 		}
-		byte[] result1 = {0,0,0,0,0,0,0,0,0,0,0,0};
-		byte[] result2 = {0,0,0,0,0,0,0,0,0,0,0,0};
+		byte[] result1 = new byte[12];
+		byte[] result2 = new byte[12];
 		for (int i = 0; i < counts.length; i++) {
 			result1[i] = (byte) (counts[i] > 0 ? 1 : 0);
 			result2[i] = (byte) (counts[i] > 0 ? 0 : 1);
@@ -44,13 +45,14 @@ public class Day3 {
 
 	public static void part2() {
 		String[] newList = lines.clone();
+		Arrays.sort(newList);
 		System.out.println(findNum(newList, 1) * findNum(newList, 0));
 	}
 
 	private static int findNum(String[] list, int mode) {
 		int bit = 0;
 		while (list.length != 1 && bit < 12) {
-			int index = (int) Math.ceil(list.length - 1 / 2f);
+			int index = (int) Math.ceil((list.length - 1) / 2f);
 			int keep = Integer.parseInt(list[index].substring(bit, bit + 1));
 			if (mode == 0) keep = 1 - keep;
 			int i = 0;
