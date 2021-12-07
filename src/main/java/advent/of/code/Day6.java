@@ -18,13 +18,8 @@ public class Day6 {
 	}
 
 	private static void part1() {
-		long[] options = new long[7];
-		for (int i = 0; i <= 6; i++) options[i] = recursiveCalculation(262 - i);
-		System.out.println(Arrays.toString(options));
 		long total = 0;
-		for (int age : ages) {
-			total += options[age];
-		}
+		for (int age : ages) total += recursiveCalculation(80 - age);
 		System.out.println(total);
 	}
 
@@ -36,7 +31,14 @@ public class Day6 {
 	}
 
 	private static void part2() {
-
+		long[] options = new long[7];
+		for (int i = 0; i <= 6; i++) options[i] = recursiveCalculation(262 - i);
+		System.out.println(Arrays.toString(options));
+		long total = 0;
+		for (int age : ages) {
+			total += options[age];
+		}
+		System.out.println(total);
 	}
 
 }
